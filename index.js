@@ -1,6 +1,22 @@
 import { tweetsData } from './data.js'
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js"
+import { getDatabase,
+         ref,
+         push,
+         onValue,
+         remove } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js"
+
+const firebaseConfig = {
+    databaseURL: "https://leads-tracker-7aeae-default-rtdb.firebaseio.com/"
+}
+
+const app = initializeApp(firebaseConfig)
+const database = getDatabase(app)
+const referenceInDB = ref(database, "handleTweetBtnClick")
+
+
 document.addEventListener('click', function(e){
     if(e.target.dataset.like){
        handleLikeClick(e.target.dataset.like) 
@@ -66,8 +82,8 @@ function handleTweetBtnClick(){
         lastSubmittedValue = currentValue;
 
         tweetsData.unshift ({
-            handle: `@Scrimba`,
-            profilePic: `images/scrimbalogo.png`,
+            handle: `@tywin1`,
+            profilePic: `images/tywin1.jpg`,
             likes: 0,
             retweets: 0,
             tweetText: tweetInput.value,
@@ -77,6 +93,7 @@ function handleTweetBtnClick(){
             uuid: uuidv4()
         })
     render()
+    push(referenceInDB, tweetInput.value)
     tweetInput.value = ''
     }
 }
@@ -158,6 +175,15 @@ function getFeedHtml(){
 function render(){
     document.getElementById('feed').innerHTML = getFeedHtml()
 }
+
+onValue(referenceInDB, function(snapshot) {
+    const snapshotDoesExist = snapshot.exists()
+    if (snapshotDoesExist) {
+        const snapshotValues = snapshot.val()
+        const tweebs = Object.values(snapshotValues)
+        render(tweebs)
+    }
+})
 
 render()
 
