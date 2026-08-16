@@ -48,7 +48,8 @@ header{
 
 /* textareas + btn */
 
-textarea{
+textarea {
+    overflow: hidden;
     border: none;
     resize: none;
     padding: 10px;
@@ -59,7 +60,7 @@ textarea{
     line-height: 30px;
 }
 
-button{
+button {
     background-color: #1DA1F2;
     border: none;
     color: white;
@@ -128,5 +129,56 @@ button{
 
 /* utility */
 .hidden{
-    display: none;
+    display: none !important;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.modal-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+}
+.reply-input {
+    overflow: hidden;
+    border: none;
+    resize: none;
+    padding: 10px;
+    margin: 10px 0;
+    height: 40px;
+    width: 100%;
+    font-size: 16px;
+    line-height: 15px;
+}
+.reply-btn {
+    background-color: #1DA1F2;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
 }
